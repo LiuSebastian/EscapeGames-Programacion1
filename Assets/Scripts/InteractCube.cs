@@ -15,7 +15,7 @@ public class InteractCube : InteractObject
         mat = mr.material;
     }
 
-    public override void Interact()
+    public override void Interact(PlayerViewController player)
     {
         if (isLocked)
         {
