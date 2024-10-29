@@ -5,10 +5,10 @@ using UnityEngine;
 
 public class InteractObject : MonoBehaviour
 {
-    [SerializeField] private GameObject outline;
-    public virtual void OnInteractRange(bool onSee)
+    public virtual void Interact(PlayerViewController player){}
+
+    public virtual void PickUp(Inventory inventory)
     {
-        outline.SetActive(onSee);
+        gameObject.SetActive(false);
     }
-    public virtual void Interact(){}
 }
