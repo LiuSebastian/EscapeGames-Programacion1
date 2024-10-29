@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using TMPro;
+using static UnityEditor.Progress;
 
-public class PlayerControllerbola : MonoBehaviour
+public class PlayerControllerbola : InteractObject
 {
     public float speed = 0;
-    
+    Item item;
 
     private Rigidbody rb;
     
@@ -18,7 +19,7 @@ public class PlayerControllerbola : MonoBehaviour
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        
+        item = GetComponent<Item>();
         
         
     }
@@ -48,5 +49,11 @@ public class PlayerControllerbola : MonoBehaviour
             
         }
        
+    }
+    public override void Interact(PlayerViewController player)
+    {
+        var inventory = player.GetInventory();
+        PickUp(inventory);
+        inventory.PickUpItem(item);
     }
 }

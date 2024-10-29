@@ -1,30 +1,37 @@
+using Cinemachine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class Gimball : MonoBehaviour
+public class Gimball : InteractObject
 {
-    [SerializeField] private float velocidadRotacion;
-    private Rigidbody rb;
-    Quaternion rotation;
-    void Start()
+    [SerializeField] Transform starting;
+    [SerializeField] GameObject bola;
+    [SerializeField] CinemachineVirtualCamera cameara;
+    bool estaActivo= false;
+    private void Start()
     {
-        rb = GetComponent<Rigidbody>();
+        bola.transform.position = starting.position;
     }
-    void Update()
+    public override void Interact(PlayerViewController player)
     {
-       
+        
+        if (estaActivo)
+        {
+            cameara.Priority = 0;
+            estaActivo = false;
+        }
+        else
+        {
+            cameara.Priority = 3;
+            estaActivo = true;
+        }
+
+
     }
 
-    void Rotate(Quaternion angle)
-    {
 
-    }
-    private void FixedUpdate()
-    {
-        //rb.MoveRotation(rotation.normalized);
-        //rb.rotation = rotation.normalized;
-    }
 }
+
