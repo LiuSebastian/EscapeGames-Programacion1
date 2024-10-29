@@ -1,20 +1,17 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
 using UnityEngine;
-using UnityEngine.PlayerLoop;
 
 public class PlayerViewController : MonoBehaviour
 {
+    [SerializeField] Inventory inventory;
     [SerializeField] private float sensX;
     [SerializeField] private float sensY;
     [SerializeField] private float interactDistance;
     [SerializeField] private LayerMask interactLayerMask;
     [SerializeField] private Transform playerTransform;
-
+    
+    [SerializeField] PlayerCanvas playerCanvas;
     private float xRotation = 0f;
-    private InteractObject lastItemHit;
+    private bool onInventoryOpen = false;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -26,6 +23,13 @@ public class PlayerViewController : MonoBehaviour
 
     void Update()
     {
+        if(!onInventoryOpen) ViewControll();
+        ViewCheck();
+        if (Input.GetKeyDown(KeyCode.E)) ClickMouse();
+    }
+
+    void ViewControll()
+    {
         float mouseX = Input.GetAxis("Mouse X") * Time.deltaTime * sensX;
         float mouseY = Input.GetAxis("Mouse Y") * Time.deltaTime * sensY;
         
@@ -34,8 +38,6 @@ public class PlayerViewController : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(xRotation, 0, 0);
         playerTransform.Rotate(Vector3.up * mouseX);
-        ViewCheck();
-        if (Input.GetKeyDown(KeyCode.E)) ClickMouse();
     }
     void ViewCheck()
     {
@@ -44,20 +46,11 @@ public class PlayerViewController : MonoBehaviour
         if (Physics.Raycast(ray, out hit, interactDistance, interactLayerMask))
         {
             var interactObject = hit.transform.gameObject.GetComponent<InteractObject>();
-            if (interactObject == null)
-            {
-                if(lastItemHit != null) lastItemHit.OnInteractRange(false);
-                lastItemHit = null;
-                return;
-            }
-
-            lastItemHit = interactObject;
-            interactObject.OnInteractRange(true);
+            playerCanvas.InteractCrosshair(true);
         }
         else
         {
-            if(lastItemHit != null) lastItemHit.OnInteractRange(false);
-            lastItemHit = null;
+            playerCanvas.InteractCrosshair(false);
         }
     }
     void ClickMouse()
@@ -69,13 +62,18 @@ public class PlayerViewController : MonoBehaviour
             if (hit.transform == null) return;
             var interactObject = hit.transform.gameObject.GetComponent<InteractObject>();
             if (interactObject == null) return;
-            interactObject.Interact();
+            interactObject.Interact(this);
         }
     }
 
+    public void InventoryOpen(bool state)
+    {
+        onInventoryOpen = state;
+    }
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red; 
         Gizmos.DrawRay(transform.position, transform.forward * interactDistance);
     }
+    public Inventory GetInventory(){return inventory;}
 }
