@@ -8,7 +8,7 @@ public class Item : MonoBehaviour
     [SerializeField] Sprite itemSprite;
     [SerializeField] string itemName;
     [SerializeField] private Rigidbody rb;
-    [SerializeField] BoxCollider collider;
+    [SerializeField] SphereCollider collider;
 
     private void Start()
     {

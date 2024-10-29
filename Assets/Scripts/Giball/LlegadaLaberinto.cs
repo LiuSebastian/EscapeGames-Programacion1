@@ -13,6 +13,11 @@ public class LlegadaLaberinto : MonoBehaviour
             // Aquí pones lo que quieres que suceda cuando el objeto llegue a la zona
             Debug.Log("¡El jugador ha llegado a la meta!");
             other.gameObject.SetActive(false);
+            var bola = other.gameObject.GetComponent<PlayerControllerbola>();
+            if (bola != null)
+            {
+                bola.Interact(FindObjectOfType<PlayerViewController>());
+            }
         }
     }
 }
