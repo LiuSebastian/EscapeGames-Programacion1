@@ -17,7 +17,7 @@ public class PlayerViewController : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         transform.position = new Vector3(0, 0.5f, 0);
-        transform.forward = playerTransform.forward;
+        //transform.forward = playerTransform.forward;
     }
 
 
