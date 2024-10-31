@@ -26,5 +26,6 @@ public class InventoryItem : MonoBehaviour
     {
         _item.OnSelectItem(true);
         _inventory.SelectItem(_item);
+        _item.PlayAnimation("OnHand");
     }
 }
