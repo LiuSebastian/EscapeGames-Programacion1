@@ -1,7 +1,9 @@
+using System.Collections;
 using UnityEngine;
 
 public class PlayerViewController : MonoBehaviour
 {
+    [SerializeField] PlayerController playerController;
     [SerializeField] Inventory inventory;
     [SerializeField] private float sensX;
     [SerializeField] private float sensY;
@@ -12,8 +14,10 @@ public class PlayerViewController : MonoBehaviour
     [SerializeField] PlayerCanvas playerCanvas;
     private float xRotation = 0f;
     private bool onInventoryOpen = false;
+    [SerializeField] private bool onInteract = false;
     void Start()
     {
+        playerController = GetComponentInParent<PlayerController>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         transform.position = new Vector3(0, 0.5f, 0);
@@ -23,9 +27,12 @@ public class PlayerViewController : MonoBehaviour
 
     void Update()
     {
-        if(!onInventoryOpen) ViewControll();
-        ViewCheck();
-        if (Input.GetKeyDown(KeyCode.E)) ClickMouse();
+        if(!onInventoryOpen && !onInteract)
+        {
+            ViewControll();
+            ViewCheck();
+            if (Input.GetKeyDown(KeyCode.E)) ClickMouse();
+        }
     }
 
     void ViewControll()
@@ -69,6 +76,33 @@ public class PlayerViewController : MonoBehaviour
     public void InventoryOpen(bool state)
     {
         onInventoryOpen = state;
+    }
+
+    public void OnInteract(bool state)
+    {
+        StartCoroutine(WaitForInteract(state));
+    }
+
+    public void LockCursor(bool locked)
+    {
+        if (locked)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible = true;
+        }
+    }
+    IEnumerator WaitForInteract(bool state)
+    {
+        yield return new WaitForSeconds(.2f);
+        playerController.OnInteract(state);
+        playerCanvas.InteractCrosshair(false);
+        playerCanvas.NormalCrosshair(false);
+        onInteract = state;
     }
     private void OnDrawGizmos()
     {

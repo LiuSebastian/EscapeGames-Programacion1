@@ -13,4 +13,9 @@ public class PlayerCanvas : MonoBehaviour
         normalCrosshair.SetActive(!interact);
         interactCrosshair.SetActive(interact);
     }
+
+    public void NormalCrosshair(bool state)
+    {
+        normalCrosshair.SetActive(state);
+    }
 }
