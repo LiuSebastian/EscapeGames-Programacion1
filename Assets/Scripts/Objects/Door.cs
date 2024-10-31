@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Door : MonoBehaviour
+public class Door : MonoBehaviour, IElectric
 {
     [SerializeField] private bool openDoor = false;
     Animator animator;
@@ -11,17 +11,18 @@ public class Door : MonoBehaviour
     {
         animator = GetComponent<Animator>();
     }
-
-    private void Update()
-    {
-        if (openDoor)
-        {
-            OpenDoor();
-        }
-    }
-
     public void OpenDoor()
     {
         animator.Play("Door_Open");
+    }
+
+    public void Open()
+    {
+        OpenDoor();
+    }
+
+    public void Close()
+    {
+
     }
 }

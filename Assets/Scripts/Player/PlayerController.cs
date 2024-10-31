@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] LayerMask ground;
 
     [SerializeField] private Transform camera;
+
+    private bool onInteract = false;
     private bool isCrouching;
     private void Start()
     {
@@ -27,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        Inputs();
+        if(!onInteract) Inputs();
     }
 
     void Inputs()
@@ -56,6 +58,10 @@ public class PlayerController : MonoBehaviour
         rb.velocity = newVel;
     }
 
+    public void OnInteract(bool state)
+    {
+        onInteract = state;
+    }
     void Crouch(bool crouching)
     {
       
