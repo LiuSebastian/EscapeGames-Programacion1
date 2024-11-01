@@ -4,15 +4,15 @@ using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
-
 
 public class ElectricWires : InteractObject
 {
     private PlayerViewController _player;
     [SerializeField] GameObject[] electricLeftWire;
-    [SerializeField] GameObject[] electricRighttWire;
-    [SerializeField] GameObject[] cables;
+    [SerializeField] GameObject[] electricRightWire;
+    [SerializeField] Wire[] cables;
     [SerializeField] private bool onInteract = false;
     [SerializeField] private LayerMask wireLayerMask;
     [SerializeField] private Camera camera;
@@ -22,6 +22,16 @@ public class ElectricWires : InteractObject
     [SerializeField] private GameObject electricConnection;
     IElectric _electric;
     [SerializeField] Camera mainCamera;
+
+    [SerializeField] Light mainLight;
+    [SerializeField] private Color red;
+    [SerializeField] private Color green;
+    [SerializeField] private Color blue;
+    [SerializeField] private Color brownColor;
+    [SerializeField] private Color violetColor;
+    [SerializeField] private Color cianColor;
+    [SerializeField] private Color whiteColor;
+    [SerializeField] private Color blackColor;
     private void Start()
     {
         mainCamera = Camera.main;
@@ -32,8 +42,9 @@ public class ElectricWires : InteractObject
         {
             wireColors.Add(wireColor[i], false);
         }
-        ShuffleWires();
-        
+
+        ActivateLight();
+        //ShuffleWires();
     }
 
     private void Update()
@@ -66,31 +77,62 @@ public class ElectricWires : InteractObject
         {
             var current = electricLeftWire[i].transform.position;
             int rand = Random.Range(0, electricLeftWire.Length);
+            
             electricLeftWire[i].transform.position = electricLeftWire[rand].transform.position;
             electricLeftWire[rand].transform.position = current;
+            
             cables[i].transform.position = cables[rand].transform.position;
             cables[rand].transform.position = current;
         }
 
-        for (int i = 0; i < electricRighttWire.Length - 1; i++)
+        for (int i = 0; i < electricRightWire.Length; i++)
         {
-            var current = electricRighttWire[i].transform.position;
-            int rand = Random.Range(0, electricRighttWire.Length);
-            electricRighttWire[i].transform.position = electricRighttWire[rand].transform.position;
-            electricRighttWire[rand].transform.position = current;
+            var current = electricRightWire[i].transform.position;
+            int rand = Random.Range(0, electricRightWire.Length);
+            electricRightWire[i].transform.position = electricRightWire[rand].transform.position;
+            electricRightWire[rand].transform.position = current;
         }
     }
 
+    public void ActivateLight()
+    {
+        Debug.Log( GetWireColors());
+        mainLight.color = GetWireColors();
+    }
+    Color GetWireColors()
+    {
+        if (wireColors[WireColor.Red] && !wireColors[WireColor.Green] && wireColors[WireColor.Blue])
+        {
+            //Hacer algo
+            return violetColor;
+        }
+        if (!wireColors[WireColor.Red] && wireColors[WireColor.Green] && wireColors[WireColor.Blue])
+        {
+            //Hacer algo
+            return cianColor;
+        }
+        if (wireColors[WireColor.Red] && wireColors[WireColor.Green] && !wireColors[WireColor.Blue])
+        {
+            //Hacer algo
+            return brownColor;
+        }
+        if (wireColors[WireColor.Red] && wireColors[WireColor.Green] && wireColors[WireColor.Blue])
+        {
+            //Hacer algo
+            return whiteColor;
+        }
+        if (wireColors[WireColor.Red]) return red;
+        if (wireColors[WireColor.Green]) return green;
+        if (wireColors[WireColor.Blue]) return blue;
+        return blackColor;
+    }
     public void ConnectWiresColor(WireColor color)
     {
         if (!wireColors.ContainsKey(color)) return;
         wireColors[color] = true;
-        foreach (var key in wireColors)
-        {
-            if (!key.Value) return;
-        }
-        ExitInteraction();
-        _electric.Open();
+
+        //ExitInteraction();
+        //_electric.Open();
     }
     void ExitInteraction()
     {
@@ -112,13 +154,16 @@ public class ElectricWires : InteractObject
             onInteract = true;
         }
     }
-
-    private void OnDrawGizmos()
+    public void ResetWires()
     {
-        // Vector3 mousePosition = mainCamera.ScreenToWorldPoint(Input.mousePosition);
-        // //mousePosition.z = 0f;
-        // Vector3 direction = mousePosition - mainCamera.transform.position;
-        // //direction.z = 0f;
-        // Gizmos.DrawRay(Camera.main.transform.position, direction);
+        foreach (var cable in cables)
+        {
+            cable.SetConnected(false);
+            cable.ResetPosition();
+        }
+        wireColors[WireColor.Red] = false;
+        wireColors[WireColor.Green] = false;
+        wireColors[WireColor.Blue] = false;
+        mainLight.color = GetWireColors();
     }
 }
