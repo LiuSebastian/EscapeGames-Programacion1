@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEditor.UIElements;
 using UnityEngine;
 
-public enum WireColor { Red, Green, Blue, Yellow };
+public enum WireColor { Red, Green, Blue};
 public enum WireType { Start, Finish};
 
 public class Wire : MonoBehaviour
@@ -16,14 +16,17 @@ public class Wire : MonoBehaviour
     [SerializeField] private GameObject cable;
 
     [SerializeField] Vector3 initialScale;
+    private Transform initialTransform;
     private void Start()
     {
-
+        if(cable!=null) initialTransform = cable.transform;
     }
 
     public void ResetPosition()
     {
-        
+        if(cable!=null)cable.transform.rotation = new Quaternion(0, 0, -90, 0);
+        if(cable!=null)cable.transform.localScale = initialScale;
+        if(cable!=null)cable.transform.position = initialTransform.position;
     }
     public void SetPosition(Transform newPosition)
     {
@@ -52,6 +55,11 @@ public class Wire : MonoBehaviour
     public WireType GetWireType()
     {
         return type;
+    }
+
+    public void SetConnected(bool state)
+    {
+        connected = state;
     }
     public bool IsConnected(){return connected;}
 }
