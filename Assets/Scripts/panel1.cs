@@ -8,9 +8,13 @@ public class panel1 : InteractObject
 {
 
     [SerializeField] Animator animator;
-    [SerializeField] Light luz;
-    [SerializeField] Color colorLuzOriginal;
-    public bool estaprendida   = false;
+    //[SerializeField] Light luz;
+    //[SerializeField] Color colorLuzOriginal;
+    public bool estaprendida   = true;
+    [SerializeField] bool codigo;
+    [SerializeField] int orden;
+    [SerializeField] PanelmanagerScrp contra;
+    [SerializeField] AudioSource audioasd;
 
     public override void Interact(PlayerViewController player)
     {
@@ -27,27 +31,26 @@ public class panel1 : InteractObject
 
     void Apagar()
     {
-        animator.Play("apagar");
+        animator.Play("prender");
+        audioasd.Play();
+        estaprendida = false;
+        contra.contrasenia[orden] = estaprendida;
+        contra.ComprobarContrasenia();
         
         //luz.color = colorLuzOriginal;
     }
 
     void Prender()
     {
-        animator.Play("prender");
-        
-    }
-    void LuzRojaPrenedr()
-    {
-        luz.color = Color.red;
+        animator.Play("apagar");
+        audioasd.Play();
         estaprendida = true;
-    }
-    void LuzRojaApagar()
-    {
-        estaprendida = false;
-        luz.color = colorLuzOriginal;
-    }
+        contra.contrasenia[orden] = estaprendida;
+        contra.ComprobarContrasenia();
+        
 
+    }
+    
 
     // Start is called before the first frame update
     void Start()

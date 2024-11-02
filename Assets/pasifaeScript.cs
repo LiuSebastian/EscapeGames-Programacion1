@@ -12,6 +12,8 @@ public class pasifaeScript : InteractObject
     [SerializeField] Animator animator;
     [SerializeField] MeshRenderer meshRenderer;
 
+    [SerializeField] AudioSource engranaje;
+
     int vueltas = 1;
     // Start is called before the first frame update
     void Start()
@@ -55,6 +57,7 @@ public class pasifaeScript : InteractObject
             SetMaterial(vueltas);
             vueltas = 0;
         }
+        engranaje.Play();
     }
     void SetMaterial(int numero)
     {
