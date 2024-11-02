@@ -23,6 +23,15 @@ public class ElectricWires : InteractObject
     IElectric _electric;
     [SerializeField] Camera mainCamera;
 
+    [SerializeField] private GameObject redCode;
+    [SerializeField] private GameObject blueCode;
+    [SerializeField] private GameObject greenCode;
+    [SerializeField] private GameObject cyanCode;
+    [SerializeField] private GameObject violetCode;
+    [SerializeField] private GameObject brownCode;
+    [SerializeField] private GameObject otherCode;
+    
+    [SerializeField] private Material color;
     [SerializeField] Light mainLight;
     [SerializeField] private Color red;
     [SerializeField] private Color green;
@@ -97,33 +106,94 @@ public class ElectricWires : InteractObject
     public void ActivateLight()
     {
         Debug.Log( GetWireColors());
-        mainLight.color = GetWireColors();
+        color.SetColor("_EmissionColor", GetWireColors());
     }
     Color GetWireColors()
     {
         if (wireColors[WireColor.Red] && !wireColors[WireColor.Green] && wireColors[WireColor.Blue])
         {
-            //Hacer algo
+            redCode.SetActive(false);
+            blueCode.SetActive(false);
+            greenCode.SetActive(false);
+            cyanCode.SetActive(false);
+            violetCode.SetActive(true);
+            brownCode.SetActive(false);
+            otherCode.SetActive(false);
             return violetColor;
         }
         if (!wireColors[WireColor.Red] && wireColors[WireColor.Green] && wireColors[WireColor.Blue])
         {
-            //Hacer algo
+            redCode.SetActive(false);
+            blueCode.SetActive(false);
+            greenCode.SetActive(false);
+            cyanCode.SetActive(true);
+            violetCode.SetActive(false);
+            brownCode.SetActive(false);
+            otherCode.SetActive(false);
             return cianColor;
         }
         if (wireColors[WireColor.Red] && wireColors[WireColor.Green] && !wireColors[WireColor.Blue])
         {
-            //Hacer algo
+            redCode.SetActive(false);
+            blueCode.SetActive(false);
+            greenCode.SetActive(false);
+            cyanCode.SetActive(false);
+            violetCode.SetActive(false);
+            brownCode.SetActive(true);
+            otherCode.SetActive(false);
             return brownColor;
         }
         if (wireColors[WireColor.Red] && wireColors[WireColor.Green] && wireColors[WireColor.Blue])
         {
-            //Hacer algo
+            redCode.SetActive(true);
+            blueCode.SetActive(true);
+            greenCode.SetActive(true);
+            cyanCode.SetActive(true);
+            violetCode.SetActive(true);
+            brownCode.SetActive(true);
+            otherCode.SetActive(true);
             return whiteColor;
         }
-        if (wireColors[WireColor.Red]) return red;
-        if (wireColors[WireColor.Green]) return green;
-        if (wireColors[WireColor.Blue]) return blue;
+        if (wireColors[WireColor.Red])
+        {
+            redCode.SetActive(true);
+            blueCode.SetActive(false);
+            greenCode.SetActive(false);
+            cyanCode.SetActive(false);
+            violetCode.SetActive(false);
+            brownCode.SetActive(false);
+            otherCode.SetActive(false);
+            return red;
+        }
+        if (wireColors[WireColor.Green])
+        {
+            redCode.SetActive(false);
+            blueCode.SetActive(false);
+            greenCode.SetActive(true);
+            cyanCode.SetActive(false);
+            violetCode.SetActive(false);
+            brownCode.SetActive(false);
+            otherCode.SetActive(false);
+            return green;
+        }
+        if (wireColors[WireColor.Blue])
+        {
+            redCode.SetActive(false);
+            blueCode.SetActive(true);
+            greenCode.SetActive(false);
+            cyanCode.SetActive(false);
+            violetCode.SetActive(false);
+            brownCode.SetActive(false);
+            otherCode.SetActive(false);
+            return blue;
+        }
+        redCode.SetActive(true);
+        blueCode.SetActive(true);
+        greenCode.SetActive(true);
+        cyanCode.SetActive(true);
+        violetCode.SetActive(true);
+        brownCode.SetActive(true);
+        otherCode.SetActive(true);
         return blackColor;
     }
     public void ConnectWiresColor(WireColor color)
@@ -164,6 +234,15 @@ public class ElectricWires : InteractObject
         wireColors[WireColor.Red] = false;
         wireColors[WireColor.Green] = false;
         wireColors[WireColor.Blue] = false;
-        mainLight.color = GetWireColors();
+        
+        redCode.SetActive(true);
+        blueCode.SetActive(true);
+        greenCode.SetActive(true);
+        cyanCode.SetActive(true);
+        violetCode.SetActive(true);
+        brownCode.SetActive(true);
+        otherCode.SetActive(true);
+        color.SetColor("_EmissionColor", blackColor);
+        
     }
 }
