@@ -12,7 +12,6 @@ public class controlCajaFuerte : InteractObject
     public GameObject cajaFuerte;
     public Animator puerta;
     private bool estaAbierta = false;
-    [SerializeField] AudioSource sonidoAbrirCerrar;
     [SerializeField] string clave;
     [SerializeField] Canvas canvas;
     [SerializeField] CinemachineVirtualCamera cameara;
@@ -20,62 +19,32 @@ public class controlCajaFuerte : InteractObject
     [SerializeField] TMP_Text mensajes;
     string mensaje1 = "Clave correcta!";
     string mensaje2 = "Clave incorrecta, intenta nuevamente.";
-    bool estaActivo = false;
-    PlayerViewController _player;
 
 
     //en el interactuar pregunta si esta abierta aplica la animacion cerrar
 
     public override void Interact(PlayerViewController player)
     {
-        if (_player == null)
+
+        if (estaAbierta)
         {
-            _player = player;
+            cameara.Priority = 0;
+            inputField.DeactivateInputField();
+            cerrar();
         }
-        if (inputField == null)
+        else
         {
-            if (estaAbierta)
-            {
-                Cerrar();
-            }
-            else
-            { 
-                AbrirCajaFuerte();
-            }
+            cameara.Priority = 3;
+            
+            inputField.ActivateInputField();
+            
+
         }
 
 
-        if (!estaActivo)
-        {
-            Debug.Log("jofas");
-            //cameara.Priority = 3;
-            estaActivo = true;
-            _player.OnInteract(true);
-            if (estaAbierta)
-            {
-                Debug.Log("esta abierta");
-                cameara.Priority = 0;
-                inputField.DeactivateInputField();
-                Cerrar();
-
-            }
-            else
-            {
-                Debug.Log("esta cerrada");
-                cameara.Priority = 3;
-                Debug.Log("esta cambio");
-                inputField.ActivateInputField();
-            }
-        }
- 
     }
 
-    public void OnExitInteraction()
-    {
-        //cameara.Priority = 0;
-        estaActivo = false;
-        _player.OnInteract(false);
-    }
+    
 
     public void VerificarPalabra()
     {
@@ -100,23 +69,16 @@ public class controlCajaFuerte : InteractObject
             inputField.ActivateInputField();
         }
     }
-    public void Cerrar()
+    public void cerrar()
     {
-        
         puerta.Play("Cerrar");
         inputField.DeactivateInputField();
-        sonidoAbrirCerrar.Play();
-        estaAbierta = false;
-        cameara.Priority = 0;
     }
     private void AbrirCajaFuerte()
     {
         puerta.Play("Abrir");
         estaAbierta=true;
         cameara.Priority = 0;
-        sonidoAbrirCerrar.Play();
-        Destroy( inputField.gameObject);
-
         //transform.Find("botones").gameObject.SetActive(false);
         // Aquí puedes poner la lógica para abrir la caja fuerte, como activar una animación o mover un objeto.
         //cajaFuerte.SetActive(false);  // Ejemplo: desactiva la caja fuerte
@@ -127,16 +89,6 @@ public class controlCajaFuerte : InteractObject
         mensajes.text =string.Empty;
 
     }
-    private void Update()
-    {
-        if (estaActivo)
-        {
-            if (Input.GetKeyDown(KeyCode.E))
-            {
-                OnExitInteraction();
-            }
-        }
 
-    }
-
+    
 }

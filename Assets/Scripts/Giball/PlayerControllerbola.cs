@@ -9,7 +9,6 @@ public class PlayerControllerbola : InteractObject
 {
     public float speed = 0;
     Item item;
-    //[SerializeField] AudioSource sonidoGirar;
 
     private Rigidbody rb;
     
@@ -31,7 +30,6 @@ public class PlayerControllerbola : InteractObject
         movementX = movementVector.x;
         movementY = movementVector.y;
 
-        //sonidoGirar.Play();
     }
 
    

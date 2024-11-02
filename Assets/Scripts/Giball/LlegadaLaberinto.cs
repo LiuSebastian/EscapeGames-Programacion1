@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class LlegadaLaberinto : MonoBehaviour
 {
-    [SerializeField] Gimball gimbal;
-    
     // Este método se llama cuando cualquier objeto entra en el Trigger
     private void OnTriggerEnter(Collider other)
     {
@@ -19,7 +17,6 @@ public class LlegadaLaberinto : MonoBehaviour
             if (bola != null)
             {
                 bola.Interact(FindObjectOfType<PlayerViewController>());
-                gimbal.OnExitInteraction();
             }
         }
     }
