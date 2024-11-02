@@ -818,9 +818,13 @@ PrefabInstance:
       propertyPath: m_Mesh
       value: 
       objectReference: {fileID: 90190188}
+    - target: {fileID: 2256921560581873688, guid: 4d295b51977aa874ea3f5793638fb1d0, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2402009453825439699, guid: 4d295b51977aa874ea3f5793638fb1d0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 7.96
+      value: 8.15
       objectReference: {fileID: 0}
     - target: {fileID: 2402009453825439699, guid: 4d295b51977aa874ea3f5793638fb1d0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -828,7 +832,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2402009453825439699, guid: 4d295b51977aa874ea3f5793638fb1d0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.21
+      value: 6.24
       objectReference: {fileID: 0}
     - target: {fileID: 2402009453825439699, guid: 4d295b51977aa874ea3f5793638fb1d0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -862,6 +866,10 @@ PrefabInstance:
       propertyPath: clave
       value: pasifae
       objectReference: {fileID: 0}
+    - target: {fileID: 4942970289484822012, guid: 4d295b51977aa874ea3f5793638fb1d0, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5710818639942290445, guid: 4d295b51977aa874ea3f5793638fb1d0, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -873,6 +881,10 @@ PrefabInstance:
     - target: {fileID: 7784643793224208204, guid: 4d295b51977aa874ea3f5793638fb1d0, type: 3}
       propertyPath: m_Name
       value: Caja (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 7908622909710327124, guid: 4d295b51977aa874ea3f5793638fb1d0, type: 3}
+      propertyPath: m_CastShadows
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5751,6 +5763,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   contrasenia: 0101010101
   correcta: 0100000100
+  caja: {fileID: 1628375290}
 --- !u!1 &858747878
 GameObject:
   m_ObjectHideFlags: 0
@@ -58300,6 +58313,11 @@ Transform:
   - {fileID: 780238046}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1628375290 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7784643793224208204, guid: 4d295b51977aa874ea3f5793638fb1d0, type: 3}
+  m_PrefabInstance: {fileID: 244375723}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1674558335
 GameObject:
   m_ObjectHideFlags: 0
