@@ -18,6 +18,7 @@ public class controlCajaFuerte : InteractObject
     [SerializeField] CinemachineVirtualCamera cameara;
     [SerializeField] TMP_InputField inputField;
     [SerializeField] TMP_Text mensajes;
+    [SerializeField] BoxCollider BoxCollider;
     string mensaje1 = "Clave correcta!";
     string mensaje2 = "Clave incorrecta, intenta nuevamente.";
     bool estaActivo = false;
@@ -116,6 +117,7 @@ public class controlCajaFuerte : InteractObject
         cameara.Priority = 0;
         sonidoAbrirCerrar.Play();
         Destroy( inputField.gameObject);
+        BoxCollider.enabled = false;
 
         //transform.Find("botones").gameObject.SetActive(false);
         // Aquí puedes poner la lógica para abrir la caja fuerte, como activar una animación o mover un objeto.
